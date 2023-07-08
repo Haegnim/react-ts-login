@@ -1,0 +1,40 @@
+{
+  "signup": [
+    {
+      "userID": "userID",
+      "password": "123d",
+      "userName": "userName",
+      "id": 0
+    },
+    {
+      "userName": "1",
+      "password": "1",
+      "userID": "1",
+      "id": "bb92cd03-ec14-4c80-a8f6-26a2e8428ef2"
+    },
+    {
+      "userName": "asdf",
+      "password": "asdf",
+      "userID": "dfs",
+      "id": "7f0df58e-a60f-4a40-a7a2-c257bba9c7fe"
+    },
+    {
+      "userName": "asdf",
+      "password": "asdf",
+      "userID": "asdf",
+      "id": "461f8ad8-4a54-4a2a-b6ab-c541ee03f22c"
+    },
+    {
+      "userName": "asdf",
+      "password": "asdf",
+      "userID": "23e",
+      "id": "12645d5e-6f5d-4e23-bac7-cdef9e23037e"
+    },
+    {
+      "userName": "a3sdfff",
+      "password": "asdefs",
+      "userID": "23esvs",
+      "id": "8ffc37b7-2d55-4550-9a0e-00a1d2e23881"
+    }
+  ]
+}
