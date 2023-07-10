@@ -5,12 +5,11 @@ import Button from './common/Button';
 import Form from './common/Form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { getUserSignupData } from '../api/signup';
+import { loginUser } from '../api/signup';
+import { useQueryClient, useMutation } from 'react-query';
 
 interface loginType {
-    userName: string;
     password: string;
-    userID: string;
     id: string;
 }
 
@@ -18,11 +17,15 @@ export const Login: React.FC = () => {
     const navigate = useNavigate();
     const [userID, setUserID] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-
+    const mutation = useMutation(loginUser, {
+        onSuccess: () => {
+            alert('로그인에 성공하였습니다.');
+        },
+    });
     const noneID = useRef<boolean>(false);
     const nonePW = useRef<boolean>(false);
 
-    const { data } = useQuery('signup', getUserSignupData);
+    // const { data } = useQuery('signup', getUserSignupData);
 
     const userNameOnChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setUserID(e.target.value);
@@ -32,39 +35,44 @@ export const Login: React.FC = () => {
     };
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (userID === '' || password === '') {
-            return alert('아이디와 비번을 입력해주세요');
-        } else {
-            noneUserCheck();
-            nonePWCheck();
-        }
+        const logindata: loginType = {
+            password: password,
+            id: userID,
+        };
+        mutation.mutateAsync(logindata);
+        // if (userID === '' || password === '') {
+        //     return alert('아이디와 비번을 입력해주세요');
+        // } else {
+        //     noneUserCheck();
+        //     nonePWCheck();
+        // }
 
-        if (noneID.current && nonePW.current) {
-            noneID.current = false;
-            nonePW.current = false;
-            alert('로그인에 성공하였습니다');
-            navigate('/');
-        } else if (noneID.current || nonePW.current) {
-            noneID.current = false;
-            nonePW.current = false;
-            return alert('아이디와 비밀번호를 확인하세요.');
-        } else {
-            return alert('존재하지 않는 회원입니다.');
-        }
+        // if (noneID.current && nonePW.current) {
+        //     noneID.current = false;
+        //     nonePW.current = false;
+        //     alert('로그인에 성공하였습니다');
+        //     navigate('/');
+        // } else if (noneID.current || nonePW.current) {
+        //     noneID.current = false;
+        //     nonePW.current = false;
+        //     return alert('아이디와 비밀번호를 확인하세요.');
+        // } else {
+        //     return alert('존재하지 않는 회원입니다.');
+        // }
     };
 
-    const noneUserCheck = () => {
-        const userIDSearch = data.find((user: loginType) => user.userID === userID);
-        if (userIDSearch) {
-            noneID.current = true;
-        }
-    };
-    const nonePWCheck = () => {
-        const userPasswordSearch = data.find((user: loginType) => user.password === password);
-        if (userPasswordSearch) {
-            nonePW.current = true;
-        }
-    };
+    // const noneUserCheck = () => {
+    //     const userIDSearch = data.find((user: loginType) => user.userID === userID);
+    //     if (userIDSearch) {
+    //         noneID.current = true;
+    //     }
+    // };
+    // const nonePWCheck = () => {
+    //     const userPasswordSearch = data.find((user: loginType) => user.password === password);
+    //     if (userPasswordSearch) {
+    //         nonePW.current = true;
+    //     }
+    // };
 
     return (
         <LoginBox>

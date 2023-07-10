@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { getUserSignupData } from '../api/signup';
 
@@ -13,7 +13,6 @@ interface SignUpType {
 
 const Home = () => {
     const { isLoading, isError, data } = useQuery('signup', getUserSignupData);
-    console.log(data);
     if (isLoading) {
         return <p>로딩중입니다....!</p>;
     }
@@ -23,15 +22,14 @@ const Home = () => {
     return (
         <div>
             <h2>HOME Page</h2>
-            {data.map((user: SignUpType, idx: number) => {
+            {/* {data.map((user: SignUpType, idx: number) => {
                 return (
                     <div key={idx}>
-                        <span>{user.userName}</span>
+                        <span>{user.id}</span>
                         <span>{user.password}</span>
-                        <span>{user.userID}</span>
                     </div>
                 );
-            })}
+            })} */}
             <Link to="/login">Go Login</Link>
         </div>
     );

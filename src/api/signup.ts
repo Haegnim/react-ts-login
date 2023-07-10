@@ -1,24 +1,39 @@
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 interface loginType {
-    userName: string;
     password: string;
-    userID: string;
     id: string;
 }
 
 // 모든 todos를 가져오는 api
 const getUserSignupData = async () => {
-    const response = await axios.get(`http://localhost:3001/signup`);
+    const response = await axios.get(`http://3.38.191.164/`);
     return response.data;
 };
 
 const signupUser = async (signupData: loginType) => {
     console.log(signupData);
-    await axios.post(`http://localhost:3001/signup`, signupData);
+    try {
+        const response = await axios.post('/register', signupData);
+        return response.data;
+    } catch (error) {
+        console.error('Error while sending data to the server:', error);
+    }
 };
 
-const cookies = new Cookies();
+const loginUser = async (loginData: loginType) => {
+    console.log(loginData);
+    try {
+        const response = await axios.post('/login', loginData);
+        const token = response.data.token;
+        console.log(token);
+        return token;
+    } catch (error) {
+        console.error('Error while sending data to the server:', error);
+    }
+};
+
+// const cookies = new Cookies();
 
 // const handleLogin = async () => {
 //   const response = await axios.post(`http://localhost:3001/signup`,{
@@ -40,4 +55,4 @@ const cookies = new Cookies();
 // setData(response.data.data)
 // }
 
-export { getUserSignupData, signupUser };
+export { getUserSignupData, signupUser, loginUser };

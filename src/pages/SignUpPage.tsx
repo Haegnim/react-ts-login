@@ -12,9 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 interface loginType {
-    userName: string;
     password: string;
-    userID: string;
     id: string;
 }
 
@@ -37,7 +35,7 @@ const JoinPage = () => {
     const [userName, setUserName] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [userID, setUserID] = useState<string>('');
-    const [noneDuplicate, setNoneDuplicate] = useState<boolean>(false);
+    // const [noneDuplicate, setNoneDuplicate] = useState<boolean>(false);
 
     const { data } = useQuery('signup', getUserSignupData);
 
@@ -54,37 +52,35 @@ const JoinPage = () => {
     //회원가입 기능
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (userName === '' || password === '' || userID === '') {
-            return alert('빈칸을 전부 입력해주세요');
-        }
-        if (noneDuplicate) {
-            const signupData: loginType = {
-                userName,
-                password,
-                userID,
-                id: uuid,
-            };
-            mutation.mutateAsync(signupData);
-        } else {
-            return alert('아이디 인증을 해주세요');
-        }
+        // if (userName === '' || password === '' || userID === '') {
+        //     return alert('빈칸을 전부 입력해주세요');
+        // }
+        // if (noneDuplicate) {
+        const signupData: loginType = {
+            password,
+            id: userID,
+        };
+        mutation.mutateAsync(signupData);
+        // } else {
+        //     return alert('아이디 인증을 해주세요');
+        // }
     };
 
     //아이디 비교 기능
-    const onClickIDHandler = (e: FormEvent<HTMLFormElement>) => {
-        const userIDSearch = data.find((user: loginType) => user.userID === userID);
+    // const onClickIDHandler = (e: FormEvent<HTMLFormElement>) => {
+    //     const userIDSearch = data.find((user: loginType) => user.id === userID);
 
-        e.preventDefault();
-        if (userID === '') {
-            return alert('사용하실 아이디를 입력해주세요');
-        } else if (userIDSearch) {
-            alert('이미 존재하는 아이디입니다');
-            setUserID('');
-        } else {
-            alert('사용가능한 아이디입니다.');
-            setNoneDuplicate(!noneDuplicate);
-        }
-    };
+    //     e.preventDefault();
+    //     if (userID === '') {
+    //         return alert('사용하실 아이디를 입력해주세요');
+    //     } else if (userIDSearch) {
+    //         alert('이미 존재하는 아이디입니다');
+    //         setUserID('');
+    //     } else {
+    //         alert('사용가능한 아이디입니다.');
+    //         setNoneDuplicate(!noneDuplicate);
+    //     }
+    // };
 
     return (
         <LoginBox>
@@ -99,7 +95,7 @@ const JoinPage = () => {
                         value={userID}
                         OnChangeHandler={userIDOnChangeHandler}
                     />
-                    <Button onClickHandler={onClickIDHandler}>인증 요청</Button>
+                    {/* <Button onClickHandler={onClickIDHandler}>인증 요청</Button> */}
                 </div>
                 {/* </div> */}
 
@@ -110,12 +106,12 @@ const JoinPage = () => {
                     OnChangeHandler={passwordOnChangeHandler}
                 />
 
-                <Input
+                {/* <Input
                     label="user name"
                     type="text"
                     value={userName}
                     OnChangeHandler={userNameOnChangeHandler}
-                />
+                /> */}
 
                 <Button>버튼</Button>
             </Form>
